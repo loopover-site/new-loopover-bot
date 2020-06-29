@@ -1,9 +1,9 @@
 import { matchPrefixes } from "@enitoni/gears";
 import { Bot, Adapter, CommandGroup, Command } from "@enitoni/gears-discordjs";
 import { DMChannel } from "discord.js";
-import { handleNewMember } from "./greetings";
-import { submit } from "./commands/submit";
-import { sums, sendSub } from "./commands/sums";
+import { handleNewMember } from "./modules/greetings";
+import { submit } from "./modules/commands/submit";
+import { sums, sendSub } from "./modules/commands/sums";
 
 const adapter = new Adapter({
     token: process.env.BOT_TOKEN!
@@ -42,7 +42,8 @@ bot.client.on("message", message => {
 	    sendSub(bot.client, sub, 535604615295533096);
 	    message.channel.send("Your entry was submitted! A moderator will process your request shortly.");
 	} else if (sub.time) {
-	    sub.url = message.content;
+	    const attachment = message.attachments?.first()?.url;
+	    sub.url = attachment ? attachment : message.content
 	    message.channel.send(`What name would you like to use?`);
 	} else if (sub.category) {
 	    if (Number(message.content).toString() === message.content) {
