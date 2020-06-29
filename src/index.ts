@@ -2,7 +2,7 @@ import { Bot, matchPrefixes } from "@enitoni/gears";
 import { Adapter, CommandGroup, Command } from "@enitoni/gears-discordjs";
 
 const adapter = new Adapter({
-    token: "NzI3MTY2NDcwNjY0MjI0ODM4.Xvn4lg.B8DUbaD0QhZYzvl4qCar1sZ3QcQ"
+    token: process.env.BOT_TOKEN
 });
 
 const command = new Command({
