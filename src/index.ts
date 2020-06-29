@@ -1,5 +1,8 @@
 import { matchPrefixes } from "@enitoni/gears";
 import { Bot, Adapter, CommandGroup, Command } from "@enitoni/gears-discordjs";
+import { TextChannel } from "discord.js";
+import { submit } from "./commands/submit";
+import { sums, sendSub } from "./commands/sums";
 
 const adapter = new Adapter({
     token: process.env.BOT_TOKEN!
@@ -9,14 +12,43 @@ const command = new Command()
     .match(matchPrefixes("test"))
     .use(context => {
 	const { message } = context;
-	message.channel.send("Test received!");
+	message.channel.send(`Test received! DM: ${message.channel instanceof TextChannel}`);
     });
 
 const group = new CommandGroup()
     .match(matchPrefixes("!"))
-    .setCommands(command);
+    .setCommands(command, submit);
 
 const bot = new Bot({ adapter, commands: [group] });
+
+bot.client.on("message", message => {
+    if (message.author.bot) {
+	return;
+    }
+    const id = message.author!.id;
+    if (!id) return;
+    const sub = sums[id];
+    if (!sub) return;
+        if (sub.url) {
+	    sub.name = message.content;
+	    sendSub(bot.client, sub, 535604615295533096);
+	    message.channel.send("Your entry was submitted! A moderator will process your request shortly.");
+	} else if (sub.time) {
+	    sub.url = message.content;
+	    message.channel.send(`What name would you like to use?`);
+	} else if (sub.category) {
+	console.log(`b ${message.content}`)
+	    if (Number(message.content).toString() === message.content) {
+	        sub.time = +message.content;
+	        message.channel.send(`What is the URL of your evidence?`);
+	    } else {
+	        message.channel.send(`That is not a number! What time did you get?`);
+	    }
+	} else {
+	    sub.category = message.content;
+	    message.channel.send(`What time did you get?`);
+	}
+});
 
 const main = async () => {
     await bot.start();
