@@ -37,7 +37,6 @@ bot.client.on("message", message => {
 	    sub.url = message.content;
 	    message.channel.send(`What name would you like to use?`);
 	} else if (sub.category) {
-	console.log(`b ${message.content}`)
 	    if (Number(message.content).toString() === message.content) {
 	        sub.time = +message.content;
 	        message.channel.send(`What is the URL of your evidence?`);
