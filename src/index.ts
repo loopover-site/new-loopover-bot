@@ -1,6 +1,6 @@
 import { matchPrefixes } from "@enitoni/gears";
 import { Bot, Adapter, CommandGroup, Command } from "@enitoni/gears-discordjs";
-import { TextChannel } from "discord.js";
+import { DMChannel } from "discord.js";
 import { handleNewMember } from "./greetings";
 import { submit } from "./commands/submit";
 import { sums, sendSub } from "./commands/sums";
@@ -13,7 +13,7 @@ const command = new Command()
     .match(matchPrefixes("test"))
     .use(context => {
 	const { message } = context;
-	message.channel.send(`Test received! DM: ${message.channel instanceof TextChannel}`);
+	message.channel.send(`Test received!`);
     });
 
 const group = new CommandGroup()
@@ -34,6 +34,7 @@ bot.client.on("message", message => {
     }
     const id = message.author!.id;
     if (!id) return;
+    if (!(message.channel instanceof DMChannel)) return;
     const sub = sums[id];
     if (!sub) return;
         if (sub.url) {
