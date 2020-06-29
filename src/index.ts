@@ -1,6 +1,7 @@
 import { matchPrefixes } from "@enitoni/gears";
 import { Bot, Adapter, CommandGroup, Command } from "@enitoni/gears-discordjs";
 import { TextChannel } from "discord.js";
+import { handleNewMember } from "./greetings";
 import { submit } from "./commands/submit";
 import { sums, sendSub } from "./commands/sums";
 
@@ -20,6 +21,12 @@ const group = new CommandGroup()
     .setCommands(command, submit);
 
 const bot = new Bot({ adapter, commands: [group] });
+
+bot.client.on("guildMemberAdd", member => {
+    if (!member.partial) {
+        handleNewMember(member);
+    }
+});
 
 bot.client.on("message", message => {
     if (message.author.bot) {
