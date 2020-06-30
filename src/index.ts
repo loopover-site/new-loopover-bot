@@ -4,6 +4,7 @@ import { DMChannel } from "discord.js";
 import { handleNewMember } from "./modules/greetings";
 import { submit } from "./modules/commands/submit";
 import { sums, sendSub } from "./modules/commands/sums";
+import { parseArguments } from "./common/parsing/middleware/parseArguments";
 
 const adapter = new Adapter({
     token: process.env.BOT_TOKEN!
@@ -18,9 +19,10 @@ const command = new Command()
 
 const group = new CommandGroup()
     .match(matchPrefixes("!"))
+    .use(parseArguments)
     .setCommands(command, submit);
 
-const bot = new Bot({ adapter, commands: [group] });
+export const bot = new Bot({ adapter, commands: [group] });
 
 bot.client.on("guildMemberAdd", member => {
     if (!member.partial) {

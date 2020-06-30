@@ -7,6 +7,18 @@ interface Submission {
     name?: string;
 }
 
+export class SubmissionBuilder {
+    constructor (private category: string, private time: number, private url: string, private name: string) {}
+    public send (client: Client, channelId: number) {
+        sendSub(client, {
+	    category: this.category,
+	    time: this.time,
+	    url: this.url,
+	    name: this.name
+	}, channelId);
+    }
+}
+
 export const sendSub = async (client: Client, sub: Submission, channelId: number): Promise<void> => {
     const embed = new MessageEmbed()
 	.setTitle("We got a submission!")
