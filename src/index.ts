@@ -3,6 +3,7 @@ import { Bot, Adapter, CommandGroup, Command } from "@enitoni/gears-discordjs";
 import { DMChannel } from "discord.js";
 import { handleNewMember } from "./modules/greetings";
 import { submit } from "./modules/commands/submit";
+import { faq } from "./modules/commands/faq";
 import { help } from "./modules/commands/help";
 import { mps } from "./modules/commands/mps";
 import { sums, sendSub } from "./modules/commands/sums";
@@ -20,7 +21,7 @@ const command = new Command().match(matchPrefixes("test")).use((context) => {
 const group = new CommandGroup()
     .match(matchPrefixes("!"))
     .use(parseArguments)
-    .setCommands(command, submit, mps, help);
+    .setCommands(command, submit, mps, help, faq);
 
 export const bot = new Bot({ adapter, commands: [group] });
 
