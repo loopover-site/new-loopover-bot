@@ -16,5 +16,9 @@ export const handleNewMember = (member: GuildMember) => {
     const channel = member.guild.channels.cache.get(
         "526598754791587852"
     )! as TextChannel;
-    channel.send(randomGreeting(`<@${member.id}>`));
+    channel.send(
+        `${randomGreeting(
+            `<@${member.id}>`
+        )} You can see my commands with \`!help\` and the FAQ with \`!faq\`!`
+    );
 };
