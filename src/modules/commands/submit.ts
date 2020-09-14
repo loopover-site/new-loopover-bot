@@ -2,39 +2,44 @@ import { matchPrefixes } from "@enitoni/gears";
 import { Command } from "@enitoni/gears-discordjs";
 import { sums, SubmissionBuilder } from "./sums";
 import { ParseArgumentsState } from "../../common/parsing/middleware/parseArguments";
-import { bot } from "../../index";
 
 const submit = new Command()
     .match(matchPrefixes("submit"))
-    .use<ParseArgumentsState>(ctx => {
-	const { message } = ctx;
-	const { args } = ctx.state;
-	if (message.channel.id !== "535613677139787777") {
-	    message.delete();
-	    message.channel.send("Please perform all submissions in <#535613677139787777>.");
-	    return;
-	}
-	if (message.attachments?.first() && args.length >= 3) {
-	    const category = args.shift();
-	    const time = Number(args.shift());
-	    const url = message.attachments?.first()?.url;
-	    const name = args.reduce((acc, cur) => acc + " " + cur);
-	    new SubmissionBuilder(category!, time!, url!, name!).send(bot.client, 535604615295533096);
-	    message.delete();
-	    return;
-	}
-	if (args.length >= 4) {
-	    const category = args.shift();
-	    const time = Number(args.shift());
-	    const url = args.shift();
-	    const name = args.reduce((acc, cur) => acc + " " + cur);
-	    new SubmissionBuilder(category!, time!, url!, name!).send(bot.client, 535604615295533096);
-	    message.delete();
-	    return;
-	}
-	sums[message.author!.id] = {};    
-	message.delete();
-	message.author!.send("What category would you like to submit for?");
+    .use<ParseArgumentsState>((ctx) => {
+        const { message } = ctx;
+        const { args } = ctx.state;
+        // if (message.channel.id !== "535613677139787777") {
+        //     message.delete();
+        //     message.channel.send(
+        //         "Please perform all submissions in <#535613677139787777>."
+        //     );
+        //     return;
+        // }
+        if (message.attachments?.first() && args.length >= 3) {
+            const category = args.shift();
+            const time = Number(args.shift());
+            const url = message.attachments?.first()?.url;
+            const name = args.reduce((acc, cur) => acc + " " + cur);
+            new SubmissionBuilder(category!, time!, url!, name!).send(
+                message.client
+            );
+            message.delete();
+            return;
+        }
+        if (args.length >= 4) {
+            const category = args.shift();
+            const time = Number(args.shift());
+            const url = args.shift();
+            const name = args.reduce((acc, cur) => acc + " " + cur);
+            new SubmissionBuilder(category!, time!, url!, name!).send(
+                message.client
+            );
+            message.delete();
+            return;
+        }
+        sums[message.author!.id] = {};
+        message.delete();
+        message.author!.send("What category would you like to submit for?");
     });
 
-export { submit }
+export { submit };

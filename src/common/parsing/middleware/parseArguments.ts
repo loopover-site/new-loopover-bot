@@ -1,4 +1,3 @@
-
 import { Middleware } from "@enitoni/gears-discordjs";
 
 import { prefix } from "../../../modules/constants";
