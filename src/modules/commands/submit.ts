@@ -20,9 +20,13 @@ const submit = new Command()
             const time = Number(args.shift());
             const url = message.attachments?.first()?.url;
             const name = args.reduce((acc, cur) => acc + " " + cur);
-            new SubmissionBuilder(category!, time!, url!, name!).send(
-                message.client
-            );
+            new SubmissionBuilder(
+                category!,
+                time!,
+                url!,
+                name!,
+                message.author.username
+            ).send(message.client);
             message.delete();
             return;
         }
@@ -31,9 +35,13 @@ const submit = new Command()
             const time = Number(args.shift());
             const url = args.shift();
             const name = args.reduce((acc, cur) => acc + " " + cur);
-            new SubmissionBuilder(category!, time!, url!, name!).send(
-                message.client
-            );
+            new SubmissionBuilder(
+                category!,
+                time!,
+                url!,
+                name!,
+                message.author.username
+            ).send(message.client);
             message.delete();
             return;
         }
