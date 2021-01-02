@@ -17,7 +17,7 @@ const submit = new Command()
         // }
         if (message.attachments?.first() && args.length >= 3) {
             const category = args.shift();
-            const time = Number(args.shift());
+            const time = args.shift();
             const url = message.attachments?.first()?.url;
             const name = args.reduce((acc, cur) => acc + " " + cur);
             new SubmissionBuilder(
@@ -28,11 +28,14 @@ const submit = new Command()
                 message.author.username
             ).send(message.client);
             message.delete();
+            message.channel.send(
+                "Your entry was submitted! A moderator will process your request shortly."
+            );
             return;
         }
         if (args.length >= 4) {
             const category = args.shift();
-            const time = Number(args.shift());
+            const time = args.shift();
             const url = args.shift();
             const name = args.reduce((acc, cur) => acc + " " + cur);
             new SubmissionBuilder(
@@ -43,6 +46,9 @@ const submit = new Command()
                 message.author.username
             ).send(message.client);
             message.delete();
+            message.channel.send(
+                "Your entry was submitted! A moderator will process your request shortly."
+            );
             return;
         }
         sums[message.author!.id] = {};

@@ -42,6 +42,7 @@ bot.client.on("message", (message) => {
     if (!sub) return;
     if (sub.url) {
         sub.name = message.content;
+        sub.rawName = message.author.username;
         sendSub(bot.client, sub);
         message.channel.send(
             "Your entry was submitted! A moderator will process your request shortly."
@@ -51,14 +52,8 @@ bot.client.on("message", (message) => {
         sub.url = attachment ? attachment : message.content;
         message.channel.send(`What name would you like to use?`);
     } else if (sub.category) {
-        if (Number(message.content).toString() === message.content) {
-            sub.time = +message.content;
-            message.channel.send(`What is the URL of your evidence?`);
-        } else {
-            message.channel.send(
-                `That is not a number! What time did you get?`
-            );
-        }
+        sub.time = message.content;
+        message.channel.send(`What is the URL of your evidence?`);
     } else {
         sub.category = message.content;
         message.channel.send(`What time did you get?`);

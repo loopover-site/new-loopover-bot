@@ -2,7 +2,7 @@ import { Client, MessageEmbed, TextChannel } from "discord.js";
 
 interface Submission {
     category?: string;
-    time?: number;
+    time?: string;
     url?: string;
     name?: string;
     rawName?: string;
@@ -11,7 +11,7 @@ interface Submission {
 export class SubmissionBuilder {
     constructor(
         private category: string,
-        private time: number,
+        private time: string,
         private url: string,
         private name: string,
         private rawName: string
