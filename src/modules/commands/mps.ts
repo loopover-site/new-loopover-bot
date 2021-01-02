@@ -18,7 +18,8 @@ export const mps = new Command()
         if (!isNumber(args[1])) {
             return message.channel.send("The second argument isn't a number!");
         }
+        const mps = (Number(args[0]) - 1) / Number(args[1]);
         message.channel.send(
-            `Your mps is ${(Number(args[0]) - 1) / Number(args[1])}!`
+            `Your mps is ${mps.toFixed(parseInt(args[2]) || 2)}!`
         );
     });

@@ -18,7 +18,7 @@ const helpEmbed = new MessageEmbed()
     )
     .addField(
         "**!mps**",
-        "Calculate the MPS of your solve! Not sure why you need this because the site already shows your mps. Syntax is !mps [moves] [seconds]."
+        "Calculate the MPS of your solve! Not sure why you need this because the site already shows your mps. Syntax is !mps [moves] [seconds] <optional truncation amount>. The truncation amount defaults to 2, but you can provide a custom value."
     );
 
 export const help = new Command().match(matchPrefixes("help")).use((ctx) => {
