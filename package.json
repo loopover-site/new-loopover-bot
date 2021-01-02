@@ -10,7 +10,7 @@
         "lint": "eslint **/*.ts",
         "format": "prettier --write \"**/*.+(js|json|ts)\"",
         "check": "yarn format && yarn lint",
-        "start": "node -r ./register.js ./dist/src/index.js",
+        "start": "node -r ./register.js ./dist/index.js",
         "start-dev": "node -r ./register.js src/index.ts",
         "dev": "nodemon",
         "tsc": "tsc",
