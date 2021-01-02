@@ -14,7 +14,8 @@
         "start-dev": "node -r ./register.js src/index.ts",
         "dev": "nodemon",
         "tsc": "tsc",
-        "build": "npm run tsc"
+        "build": "npm run tsc",
+        "postinstall": "npm run tsc"
     },
     "author": "ImperialWater",
     "license": "ISC",
