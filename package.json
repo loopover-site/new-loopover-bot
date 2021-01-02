@@ -9,13 +9,12 @@
     "scripts": {
         "lint": "eslint **/*.ts",
         "format": "prettier --write \"**/*.+(js|json|ts)\"",
-        "check": "npm run format && npm run lint",
+        "check": "yarn format && yarn lint",
         "start": "node -r ./register.js ./dist/src/index.js",
         "start-dev": "node -r ./register.js src/index.ts",
         "dev": "nodemon",
         "tsc": "tsc",
-        "build": "npm run tsc",
-        "postinstall": "npm run tsc"
+        "build": "yarn tsc"
     },
     "author": "ImperialWater",
     "license": "ISC",
