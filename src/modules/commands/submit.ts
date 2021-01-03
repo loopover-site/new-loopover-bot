@@ -5,7 +5,7 @@ import { ParseArgumentsState } from "../../common/parsing/middleware/parseArgume
 
 const submit = new Command()
     .match(matchPrefixes("submit"))
-    .use<ParseArgumentsState>((ctx) => {
+    .use<ParseArgumentsState>(async (ctx) => {
         const { message } = ctx;
         const { args } = ctx.state;
         // if (message.channel.id !== "535613677139787777") {
@@ -28,9 +28,10 @@ const submit = new Command()
                 message.author.username
             ).send(message.client);
             message.delete();
-            message.channel.send(
+            const returnMessage = await message.channel.send(
                 "Your entry was submitted! A moderator will process your request shortly."
             );
+            setTimeout(() => void returnMessage.delete(), 60000);
             return;
         }
         if (args.length >= 4) {
@@ -46,9 +47,10 @@ const submit = new Command()
                 message.author.username
             ).send(message.client);
             message.delete();
-            message.channel.send(
+            const returnMessage = await message.channel.send(
                 "Your entry was submitted! A moderator will process your request shortly."
             );
+            setTimeout(() => void returnMessage.delete(), 60000);
             return;
         }
         sums[message.author!.id] = {};
